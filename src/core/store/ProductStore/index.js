@@ -16,5 +16,15 @@ export const useProductStore = defineStore("products", () => {
         })
     }
 
-    return { products, getProducts };
+    async function searchProducts(data){
+        await axios.get(`https://dummyjson.com/products/search?q=${data}`)
+            .then(response => {
+            this.products = response.data.products
+            })
+            .catch(e => {
+            console.log(e)
+        })
+    }
+
+    return { products, getProducts, searchProducts };
 });
