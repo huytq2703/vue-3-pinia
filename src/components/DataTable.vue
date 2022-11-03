@@ -6,12 +6,13 @@
                     <h5 >DataTable</h5>
                     <InputText placeholder="Search" v-model="search"></InputText>
                     <Button style="margin-left: 10px;" @click="search_button">Search</Button>
-                    <DataTable :value="products" :scrollable="true" scrollHeight="400px" :loading="loading">
-                        <Column header="check" > 
+                    <DataTable v-model:selection="selectedProducts3" :value="products" :scrollable="true" scrollHeight="400px" :loading="loading">
+                        <!-- <Column header="check" > 
                         <template #body="{data}">
                             <Checkbox :value="data" id="checkOption1" name="option" v-model="checkboxValue"/>
                         </template> 
-                    </Column>
+                        </Column> -->
+                     <Column  selectionMode="multiple" headerStyle="width: 3em" v-model="checkboxValue" ></Column>
                         <Column field="id" header="id" style="min-width: 200px">
                         </Column>
                         <Column field="title" header="title" style="min-width: 200px"></Column>
@@ -34,7 +35,9 @@ import { ref, onMounted } from "vue";
 import ProductService from "@/core/store/serve";
 
 
-const checkboxValue = ref([])
+// const checkboxValue = ref([])
+
+const selectedProducts3 = ref();
 
 const search = ref("")
 const loading = ref(false);
@@ -58,7 +61,10 @@ const search_button = ()=>{
     });
 }
 const testconsole = ()=>{
-    console.log(checkboxValue.value)
+    // console.log(checkboxValue.value)
+    // console.log("hihoohoho")
+
+    console.log(selectedProducts3.value)
 }
 </script>
 
