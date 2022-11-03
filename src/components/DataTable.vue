@@ -3,7 +3,9 @@
         <div class="grid">
             <div class="col-12">
                 <div class="card">
-                    <h5>DataTable</h5>
+                    <h5 >DataTable</h5>
+                    <InputText placeholder="Search" v-model="search"></InputText>
+                    <Button style="margin-left: 10px;" @click="search_button">Search</Button>
                     <DataTable :value="products" :scrollable="true" scrollHeight="400px" :loading="loading">
                         <Column header="check" > 
                         <template #body="{data}">
@@ -34,21 +36,27 @@ import ProductService from "@/core/store/serve";
 
 const checkboxValue = ref([])
 
-
+const search = ref("")
 const loading = ref(false);
 const products = ref();
 const productService = ref(new ProductService());
 onMounted(() => {
     loading.value = true;
-
     //     productService.value.getProductsSmall().then(data => products.value = data);
     productService.value.getProductsSmall().then((data) => {
         products.value = data.products;
         loading.value = false;
     });
+
     // console.log(productService.value.getProductsSmall());
 });
 
+const search_button = ()=>{
+    productService.value.searchproduct(search.value).then((data) => {
+        products.value = data.products;
+        loading.value = false;
+    });
+}
 const testconsole = ()=>{
     console.log(checkboxValue.value)
 }
@@ -57,6 +65,7 @@ const testconsole = ()=>{
 <style lang="scss" scoped>
 ::v-deep(.p-datatable-frozen-tbody) {
     font-weight: bold;
+    
 }
 
 ::v-deep(.p-datatable-scrollable .p-frozen-column) {
