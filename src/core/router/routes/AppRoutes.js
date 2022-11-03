@@ -10,6 +10,11 @@ export default [
         name: 'dashboard',
         component: () => import('@/views/Dashboard/Dashboard.vue')
       },
+      {
+        path: '/products',
+        name: 'products',
+        component: () => import('@/views/Dashboard/Products.vue')
+      },
       // {
       //   path: '/formlayout',
       //   name: 'formlayout',
