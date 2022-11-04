@@ -15,6 +15,11 @@ export default [
         name: 'table',
         component: () => import('@/components/DataTable.vue')
       },
+      {
+        path: '/messages',
+        name: 'messages',
+        component: () => import('@/components/Message.vue')
+      },
       // {
       //   path: '/formlayout',
       //   name: 'formlayout',

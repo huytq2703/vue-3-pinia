@@ -4,8 +4,25 @@
             <div class="col-12">
                 <div class="card">
                     <h5>DataTable</h5>
-                    <InputText placeholder="Search" v-model="search" style="margin-bottom: 10px"></InputText>
-                    <Button style="margin-left: 10px; margin-bottom: 10px" @click="search_button">Search</Button>
+
+                    <div class="p-fluid formgrid grid">
+                        <div class="field col-12 md:col-4">
+                            <InputText placeholder="Search" v-model="search" style="margin-bottom: 10px"></InputText>
+                        </div>
+                        <div class="field col-12 md:col-1">
+                            <Button style="margin-left: 10px; margin-bottom: 10px"
+                                @click="search_button">Search</Button>
+                        </div>
+                        <div class="field col-12 md:col-5"></div>
+                        <div class="field col-12 md:col-2">
+                            <!-- <Dropdown v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" placeholder="Select a City" /> -->
+                            <span class="p-float-label">
+                                <Dropdown id="dropdown" v-model="selectedCity1" :options="cate" optionLabel="name"
+                                    optionValue="name" />
+                                <label for="dropdown">Category</label>
+                            </span>
+                        </div>
+                    </div>
 
                     <!-- <DataTable v-model:selection="selectedProducts3" :value="products" :scrollable="true"
                         scrollHeight="400px" :loading="loading" 
@@ -63,12 +80,12 @@
                 <Button @click="testconsole">Console log</Button>
             </div>
         </div>
-        <h1>hii</h1>
+      
     </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch, reactive } from "vue";
 import ProductService from "@/core/store/serve";
 
 // const checkboxValue = ref([])
@@ -79,6 +96,33 @@ const search = ref("");
 const loading = ref(false);
 const products = ref();
 const productService = ref(new ProductService());
+
+//drop test
+const selectedCity1 = ref(null);
+const i = ref();
+const cate = ref([
+    {
+        name: "All",
+    },
+]);
+const cate1 = reactive({
+    name: String,
+});
+watch(selectedCity1, () => {
+    if (selectedCity1.value != "All") {
+        productService.value
+            .searchproduct_bycategories(selectedCity1.value)
+            .then((data) => {
+                products.value = data.products;
+                loading.value = false;
+            });
+    } else {
+        productService.value.getProductsSmall().then((data) => {
+            products.value = data.products;
+            loading.value = false;
+        });
+    }
+});
 onMounted(() => {
     loading.value = true;
     //     productService.value.getProductsSmall().then(data => products.value = data);
@@ -86,8 +130,13 @@ onMounted(() => {
         products.value = data.products;
         loading.value = false;
     });
-
-    // console.log(productService.value.getProductsSmall());
+    productService.value.product_categories().then((data) => {
+        for (i.value in data) {
+            cate1.name = data[i.value];
+            let ref = { name: data[i.value] };
+            cate.value.push(ref);
+        }
+    });
 });
 
 const search_button = () => {
