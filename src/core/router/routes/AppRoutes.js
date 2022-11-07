@@ -20,6 +20,11 @@ export default [
         name: 'messages',
         component: () => import('@/components/Message.vue')
       },
+      {
+        path: '/chat',
+        name: 'chat',
+        component: () => import('@/components/chatting.vue')
+      },
       // {
       //   path: '/formlayout',
       //   name: 'formlayout',

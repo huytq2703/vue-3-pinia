@@ -9,11 +9,12 @@
                         <div class="field col-12 md:col-4">
                             <InputText placeholder="Search" v-model="search" style="margin-bottom: 10px"></InputText>
                         </div>
-                        <div class="field col-12 md:col-1">
-                            <Button style="margin-left: 10px; margin-bottom: 10px"
-                                @click="search_button">Search</Button>
+                        <div class="field col-12 md:col-2">
+                            <!-- <Button style="margin-left: 10px; margin-bottom: 10px"
+                                @click="search_button">Search</Button> -->
+                            <Button type="button" label="Search" icon="pi pi-search" :loading="loading_forsearch" @click="search_button(),load()"></Button>
                         </div>
-                        <div class="field col-12 md:col-5"></div>
+                        <div class="field col-12 md:col-4"></div>
                         <div class="field col-12 md:col-2">
                             <!-- <Dropdown v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" placeholder="Select a City" /> -->
                             <span class="p-float-label">
@@ -96,7 +97,7 @@ const search = ref("");
 const loading = ref(false);
 const products = ref();
 const productService = ref(new ProductService());
-
+const loading_forsearch = ref(false)
 //drop test
 const selectedCity1 = ref(null);
 const i = ref();
@@ -113,6 +114,7 @@ watch(selectedCity1, () => {
         productService.value
             .searchproduct_bycategories(selectedCity1.value)
             .then((data) => {
+              
                 products.value = data.products;
                 loading.value = false;
             });
@@ -129,7 +131,7 @@ onMounted(() => {
     productService.value.getProductsSmall().then((data) => {
         products.value = data.products;
         loading.value = false;
-    });
+    });  
     productService.value.product_categories().then((data) => {
         for (i.value in data) {
             cate1.name = data[i.value];
@@ -141,8 +143,10 @@ onMounted(() => {
 
 const search_button = () => {
     productService.value.searchproduct(search.value).then((data) => {
+        // loading.value = true;
         products.value = data.products;
-        loading.value = false;
+        // loading.value = false;
+        loading_forsearch.value = false
     });
 };
 const testconsole = () => {
@@ -151,6 +155,12 @@ const testconsole = () => {
 
     console.log(selectedProducts3.value);
 };
+const load = () =>{
+    loading_forsearch.value = true
+    // setTimeout(() =>
+    //     loading_forsearch.value[index] = false,1000
+    // )
+}
 </script>
 
 <style lang="scss" scoped>

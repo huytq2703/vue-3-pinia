@@ -43,11 +43,13 @@ export default {
           label: 'UI Components', icon: 'pi pi-fw pi-sitemap',
           items: [
             {label: 'Form Layout', icon: 'pi pi-fw pi-id-card', to: '/formlayout'},
+            {label: 'Chat', icon: 'pi pi-fw pi-comment', to: '/chat'},
+            {label: 'Table', icon: 'pi pi-fw pi-table', to: '/table'},
             {label: 'Input', icon: 'pi pi-fw pi-check-square', to: '/input'},
             {label: "Float Label", icon: "pi pi-fw pi-bookmark", to: "/floatlabel"},
             {label: "Invalid State", icon: "pi pi-fw pi-exclamation-circle", to: "/invalidstate"},
             {label: 'Button', icon: 'pi pi-fw pi-mobile', to: '/button'},
-            {label: 'Table', icon: 'pi pi-fw pi-table', to: '/table'},
+            
             {label: 'List', icon: 'pi pi-fw pi-list', to: '/list'},
             {label: 'Tree', icon: 'pi pi-fw pi-share-alt', to: '/tree'},
             {label: 'Panel', icon: 'pi pi-fw pi-tablet', to: '/panel'},
