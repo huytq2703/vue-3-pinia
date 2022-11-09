@@ -1,35 +1,65 @@
-import {ref, watch} from 'vue'
+import {ref} from 'vue'
 import { defineStore } from 'pinia'
 
+// export const useUserStore = defineStore({
+//     id:'counter',
+//     state: () => ({
+//         count : 10,
+//         todo_list : ()=>{
 
+//         }
+//     }),
+//     actions :  {
+//         cong() {
+//             this.count++
+//         },
+//         cong_tru() {
+//             this.count--
+
+//         }
+//     }
+// })
 export const useUserStore = defineStore("User", ()=>{
+    
     const user = ref({
-        name:"admin",
-        pass:"admin123",
+        count:0,
     });
-    const Chagename = (newname) =>{
-        user.value.name = newname;
+   
+    const todo_list = ref(
+         [
+            // {"todo": "Volkswagen"},
+            // {"todo": "hihi"},
+            // {"todo": "hihi0"},
+        ])
+    ;
+    const add_todo = (e)=>{
+        let ref = { "todo": e};
+        todo_list.value.push(ref);
+     
+        console.log(todo_list.value)
+        // localStorage.setItem("todo", JSON.stringify(todo_list.value))
+        // console.log(localStorage.todo)
     }
-    const getCarsSmall = () =>{
-       return{
-        "data": [
-            {"todo": "Volkswagen", "check": true},
-        
-        ]
-    }
-    }
-    watch(
-        user,
-        (UserVal)=>{
-            localStorage.setItem("user", JSON.stringify(UserVal));
-        },
-        {
-            deep:true
+    const cong = (e) =>{
+        console.log(e)
+        for (let i in e){
+            console.log(e[i])
+            for (let j in todo_list.value){
+                if (todo_list.value[j].todo == e[i]){
+                        todo_list.value.splice(j,1);
+                }
         }
-    )
+        }
+       
+       
+    }
+    
+   
     return{
         user,
-        Chagename,
-        getCarsSmall
+        cong,
+ 
+        todo_list,
+        add_todo
     }
 }); 
